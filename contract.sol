@@ -3,12 +3,15 @@ pragma solidity ^0.8.0;
 
 contract SimpleStorage {
     uint256 public storedValue;
+event StoredValueUpdated(uint256 oldValue, uint256 newValue, address updatedBy);
 
     constructor(uint256 _initialValue) {
         storedValue = _initialValue;
     }
 
-    function setStoredValue(uint256 _newValue) public {
+	uint256 oldValue = storedValue;
+	storedValue = _newValue;
+	emit StoredValueUpdated(oldValue, _newValue, msg.sender);
         storedValue = _newValue;
     }
 
